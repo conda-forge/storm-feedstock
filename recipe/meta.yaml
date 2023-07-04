@@ -1,5 +1,5 @@
 {% set name = "storm" %}
-{% set version = "0.25" %}
+{% set version = "0.26" %}
 
 
 package:
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/storm-{{ version }}.tar.gz
-  sha256: ec7cc8897638f94f6b75c6a2af74aa9b31f5492d7a2f9482c08a8dd7b46adb14
+  sha256: 9fe4f638fdd58494823bd156eb63fc32ffc41dd292e314fed3efe74a55c87f3e
 
 build:
-  number: 3
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
