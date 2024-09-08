@@ -24,7 +24,7 @@ requirements:
     - setuptools
   run:
     - python
-    - six
+    - packaging >=14.1
 
 test:
   imports:
