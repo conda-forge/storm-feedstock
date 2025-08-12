@@ -1,0 +1,52 @@
+schema_version: 1
+
+context:
+  name: storm
+  version: 1.0
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.io/packages/source/${{ name[0] }}/${{ name }}/storm-${{ version }}.tar.gz
+  sha256: 9b434d3ce3248bd1fc86b8406c5dcc3350585d4512f1a7f6731aa97688ead841
+
+build:
+  number: 1
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - python
+    - packaging >=14.1
+
+tests:
+  - python:
+      imports:
+        - storm
+        - storm.databases
+  - requirements:
+      run:
+        - pip
+    script:
+      - pip check
+
+about:
+  summary: Storm is an object-relational mapper (ORM) for Python developed at Canonical.
+  license: LGPL-2.1-or-later
+  license_file: LICENSE
+  homepage: https://storm.canonical.com
+  repository: https://launchpad.net/storm
+  documentation: https://storm.canonical.com
+
+extra:
+  recipe-maintainers:
+    - beenje
