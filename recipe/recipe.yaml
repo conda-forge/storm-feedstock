@@ -33,11 +33,7 @@ tests:
       imports:
         - storm
         - storm.databases
-  - requirements:
-      run:
-        - pip
-    script:
-      - pip check
+      pip_check: true
 
 about:
   summary: Storm is an object-relational mapper (ORM) for Python developed at Canonical.
