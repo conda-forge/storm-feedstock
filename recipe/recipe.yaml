@@ -41,7 +41,7 @@ about:
   license_file: LICENSE
   homepage: https://storm.canonical.com
   repository: https://launchpad.net/storm
-  documentation: https://storm.canonical.com
+  documentation: https://storm-orm.readthedocs.io
 
 extra:
   recipe-maintainers:
