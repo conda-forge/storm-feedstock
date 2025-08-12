@@ -3,7 +3,7 @@ About storm-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/storm-feedstock/blob/main/LICENSE.txt)
 
-Home: https://storm.canonical.com
+Home: https://storm.canonical.com/
 
 Package license: LGPL-2.1-or-later
 
@@ -11,7 +11,7 @@ Summary: Storm is an object-relational mapper (ORM) for Python developed at Cano
 
 Development: https://launchpad.net/storm
 
-Documentation: https://storm.canonical.com
+Documentation: https://storm-orm.readthedocs.io/
 
 Current build status
 ====================
