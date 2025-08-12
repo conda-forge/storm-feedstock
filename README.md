@@ -11,7 +11,7 @@ Summary: Storm is an object-relational mapper (ORM) for Python developed at Cano
 
 Development: https://launchpad.net/storm
 
-Documentation: https://storm.canonical.com/
+Documentation: https://storm-orm.readthedocs.io/
 
 Current build status
 ====================
