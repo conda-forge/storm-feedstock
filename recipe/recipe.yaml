@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: storm
-  version: "1.1"
+  version: "1.2"
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/storm-${{ version }}.tar.gz
-  sha256: 1ac8ccf635c1e79d62a3fea76019b2b15f60e57e6692d36c71bed46f60d96a2c
+  sha256: f8d3b1239e3c49f44ec273856fdead74fa54627045fa59db5df4dc97b02e999c
 
 build:
-  number: 1
+  number: 0
   script: ${{ PYTHON }} -m pip install . -vv
 
 requirements:
