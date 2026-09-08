@@ -1,0 +1,73 @@
+diff --git a/storm/cextensions.c b/storm/cextensions.c
+index 512274b..9f2160a 100644
+--- a/storm/cextensions.c
++++ b/storm/cextensions.c
+@@ -53,6 +53,35 @@ static PyObject *parenthesis_format = NULL;
+ static PyObject *default_compile_join = NULL;
+ 
+ 
++// Copied from https://github.com/python/pythoncapi-compat/blob/4fb8135fcc7c203e7349558b2ec3ac2beed6a9b7/pythoncapi_compat.h#L529
++// gh-105927 added PyWeakref_GetRef() to Python 3.13.0a1
++#if PY_VERSION_HEX < 0x030D0000
++static inline int
++PyWeakref_GetRef(PyObject *ref, PyObject **pobj)
++{
++    PyObject *obj;
++    if (ref != NULL && !PyWeakref_Check(ref)) {
++        *pobj = NULL;
++        PyErr_SetString(PyExc_TypeError, "expected a weakref");
++        return -1;
++    }
++    obj = PyWeakref_GetObject(ref);
++    if (obj == NULL) {
++        /* SystemError if ref is NULL. */
++        *pobj = NULL;
++        return -1;
++    }
++    if (obj == Py_None) {
++        *pobj = NULL;
++        return 0;
++    }
++    Py_INCREF(obj);
++    *pobj = obj;
++    return 1;
++}
++#endif
++
++
+ typedef struct {
+     PyObject_HEAD
+     PyObject *_weakreflist;
+@@ -399,12 +428,15 @@ EventSystem_emit(EventSystemObject *self, PyObject *all_args)
+     args = PyTuple_GetSlice(all_args, 1, PyTuple_GET_SIZE(all_args));
+     if (args) {
+         /* owner = self._owner_ref() */
+-        PyObject *owner = PyWeakref_GET_OBJECT(self->_owner_ref);
++        PyObject *owner = NULL;
++        if (PyWeakref_GetRef(self->_owner_ref, &owner) < 0) {
++            Py_DECREF(args);
++            return NULL;
++        }
+         /* if owner is not None: */
+-        if (owner != Py_None) {
++        if (owner != NULL) {
+             /* callbacks = self._hooks.get(name) */
+             PyObject *callbacks = PyDict_GetItem(self->_hooks, name);
+-            Py_INCREF(owner);
+             /* if callbacks: */
+             if (callbacks && PySet_GET_SIZE(callbacks) != 0) {
+                 /* for callback, data in tuple(callbacks): */
+@@ -1904,8 +1936,11 @@ error:
+ static PyObject *
+ ObjectInfo_get_obj(ObjectInfoObject *self, PyObject *args)
+ {
+-    PyObject *obj = PyWeakref_GET_OBJECT(self->_obj_ref);
+-    Py_INCREF(obj);
++    PyObject *obj = NULL;
++    if (PyWeakref_GetRef(self->_obj_ref, &obj) < 0)
++        return NULL;
++    if (obj == NULL)
++        Py_RETURN_NONE;
+     return obj;
+ }
+ 
