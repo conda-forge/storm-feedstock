@@ -282,6 +282,3 @@ Feedstock Maintainers
 
 * [@beenje](https://github.com/beenje/)
 
-
-<!-- dummy commit to enable rerendering -->
-
