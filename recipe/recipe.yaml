@@ -11,8 +11,6 @@ package:
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/storm-${{ version }}.tar.gz
   sha256: b19370f83f21ba5bcd9d2402830ee55f76f0c827960be5a32049113331557171
-  patches:
-    - storm-3.15.patch
 
 build:
   number: 0
